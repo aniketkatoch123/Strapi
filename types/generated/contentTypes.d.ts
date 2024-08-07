@@ -847,6 +847,18 @@ export interface ApiAsdfAsdf extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    textLong: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    jsonEntry: Attribute.JSON &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -858,6 +870,66 @@ export interface ApiAsdfAsdf extends Schema.CollectionType {
       'api::asdf.asdf',
       'oneToMany',
       'api::asdf.asdf'
+    >;
+    locale: Attribute.String;
+  };
+}
+
+export interface ApiExperimentExperiment extends Schema.CollectionType {
+  collectionName: 'experiments';
+  info: {
+    singularName: 'experiment';
+    pluralName: 'experiments';
+    displayName: 'Experiment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    longTextData: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    isEnabled: Attribute.Boolean &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Attribute.DefaultTo<true>;
+    richBlockText: Attribute.Blocks &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::experiment.experiment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::experiment.experiment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::experiment.experiment',
+      'oneToMany',
+      'api::experiment.experiment'
     >;
     locale: Attribute.String;
   };
@@ -1047,6 +1119,12 @@ export interface ApiPageLinkPageLink extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    order: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1140,6 +1218,12 @@ export interface ApiSectionSection extends Schema.CollectionType {
         };
       }>;
     sectionOrder: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    pageId: Attribute.Integer &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1319,6 +1403,12 @@ export interface ApiSocialLinkSocialLink extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    order: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1360,7 +1450,7 @@ export interface ApiViewPortViewPort extends Schema.CollectionType {
     };
   };
   attributes: {
-    backgroundImgUrl: Attribute.String &
+    illustrationUrl: Attribute.String &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1384,7 +1474,7 @@ export interface ApiViewPortViewPort extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    subHeading: Attribute.String &
+    description: Attribute.String &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1397,6 +1487,12 @@ export interface ApiViewPortViewPort extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<true>;
+    pageId: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1421,6 +1517,67 @@ export interface ApiViewPortViewPort extends Schema.CollectionType {
   };
 }
 
+export interface ApiWebPageWebPage extends Schema.CollectionType {
+  collectionName: 'web_pages';
+  info: {
+    singularName: 'web-page';
+    pluralName: 'web-pages';
+    displayName: 'WebPage';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    pageName: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    isEnabled: Attribute.Boolean &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Attribute.DefaultTo<true>;
+    pageId: Attribute.Integer &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::web-page.web-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::web-page.web-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::web-page.web-page',
+      'oneToMany',
+      'api::web-page.web-page'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1440,6 +1597,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::asdf.asdf': ApiAsdfAsdf;
+      'api::experiment.experiment': ApiExperimentExperiment;
       'api::footer.footer': ApiFooterFooter;
       'api::navbar.navbar': ApiNavbarNavbar;
       'api::page-link.page-link': ApiPageLinkPageLink;
@@ -1447,6 +1605,7 @@ declare module '@strapi/types' {
       'api::section-item.section-item': ApiSectionItemSectionItem;
       'api::social-link.social-link': ApiSocialLinkSocialLink;
       'api::view-port.view-port': ApiViewPortViewPort;
+      'api::web-page.web-page': ApiWebPageWebPage;
     }
   }
 }
